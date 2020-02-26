@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+Image:
+  menu: "http://47.100.90.111/menu_img/"
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql

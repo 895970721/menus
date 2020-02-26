@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crf.menu.mapper.MenuAccessoriesMapper" >
+  <resultMap id="BaseResultMap" type="com.crf.menu.entity.MenuAccessories" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="accessories" property="accessories" jdbcType="VARCHAR" />
+    <result column="dosage" property="dosage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menu_id, accessories, dosage
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from menu_accessories
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMenuId" resultType="com.crf.menu.entity.MenuAccessories" parameterType="java.lang.Integer">
+    select accessories,dosage
+    from menu_accessories
+    where menu_id = #{menu_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu_accessories
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.crf.menu.entity.MenuAccessories" >
+    insert into menu_accessories (id, menu_id, accessories, 
+      dosage)
+    values (#{id,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, #{accessories,jdbcType=VARCHAR}, 
+      #{dosage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crf.menu.entity.MenuAccessories" >
+    insert into menu_accessories
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="accessories != null" >
+        accessories,
+      </if>
+      <if test="dosage != null" >
+        dosage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="accessories != null" >
+        #{accessories,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        #{dosage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crf.menu.entity.MenuAccessories" >
+    update menu_accessories
+    <set >
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="accessories != null" >
+        accessories = #{accessories,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        dosage = #{dosage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crf.menu.entity.MenuAccessories" >
+    update menu_accessories
+    set menu_id = #{menuId,jdbcType=INTEGER},
+      accessories = #{accessories,jdbcType=VARCHAR},
+      dosage = #{dosage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

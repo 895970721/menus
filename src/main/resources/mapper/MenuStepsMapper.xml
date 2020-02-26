@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crf.menu.mapper.MenuStepsMapper" >
+  <resultMap id="BaseResultMap" type="com.crf.menu.entity.MenuSteps" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="step_num" property="stepNum" jdbcType="INTEGER" />
+    <result column="step_word" property="stepWord" jdbcType="VARCHAR" />
+    <result column="step_img" property="stepImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menu_id, step_num, step_word, step_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu_steps
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMenuId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from menu_steps
+    where menu_id = #{menu_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu_steps
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.crf.menu.entity.MenuSteps" >
+    insert into menu_steps (id, menu_id, step_num, 
+      step_word, step_img)
+    values (#{id,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, #{stepNum,jdbcType=INTEGER}, 
+      #{stepWord,jdbcType=VARCHAR}, #{stepImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crf.menu.entity.MenuSteps" >
+    insert into menu_steps
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="stepNum != null" >
+        step_num,
+      </if>
+      <if test="stepWord != null" >
+        step_word,
+      </if>
+      <if test="stepImg != null" >
+        step_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="stepNum != null" >
+        #{stepNum,jdbcType=INTEGER},
+      </if>
+      <if test="stepWord != null" >
+        #{stepWord,jdbcType=VARCHAR},
+      </if>
+      <if test="stepImg != null" >
+        #{stepImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crf.menu.entity.MenuSteps" >
+    update menu_steps
+    <set >
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="stepNum != null" >
+        step_num = #{stepNum,jdbcType=INTEGER},
+      </if>
+      <if test="stepWord != null" >
+        step_word = #{stepWord,jdbcType=VARCHAR},
+      </if>
+      <if test="stepImg != null" >
+        step_img = #{stepImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crf.menu.entity.MenuSteps" >
+    update menu_steps
+    set menu_id = #{menuId,jdbcType=INTEGER},
+      step_num = #{stepNum,jdbcType=INTEGER},
+      step_word = #{stepWord,jdbcType=VARCHAR},
+      step_img = #{stepImg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
