@@ -22,6 +22,9 @@
     where note_id = #{noteId,jdbcType=INTEGER}
     and user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from note_like where user_id = #{userId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from note_like
     where id = #{id,jdbcType=INTEGER}

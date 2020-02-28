@@ -9,6 +9,9 @@ import com.crf.menu.service.NoteLikeService;
 import com.crf.menu.utils.UserTokenUtilImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class NoteLikeServiceImpl implements NoteLikeService {
@@ -19,7 +22,11 @@ public class NoteLikeServiceImpl implements NoteLikeService {
     @Autowired
     private UserTokenUtilImpl tokenUtil;
 
+    @Autowired
+    private NoteServiceImpl noteService;
+
     @Override
+    @Transactional
     public void addLike(String token, Integer noteId) {
         User user = tokenUtil.getUser(token);
         NoteLike noteLike = noteLikeMapper.selectByNoteIdAndUserId(user.getId(),noteId);
@@ -30,9 +37,11 @@ public class NoteLikeServiceImpl implements NoteLikeService {
         noteLike.setNoteId(noteId);
         noteLike.setUserId(user.getId());
         noteLikeMapper.insertSelective(noteLike);
+        noteService.addLikeNum(noteId);
     }
 
     @Override
+    @Transactional
     public void delLike(String token, Integer noteId) {
         User user = tokenUtil.getUser(token);
         NoteLike noteLike = noteLikeMapper.selectByNoteIdAndUserId(user.getId(),noteId);
@@ -40,5 +49,11 @@ public class NoteLikeServiceImpl implements NoteLikeService {
             throw new NoteLikeException(StatusCode.NoteLikeNoExit);
         }
         noteLikeMapper.deleteByPrimaryKey(noteLike.getId());
+        noteService.delLikeNum(noteId);
+    }
+
+    @Override
+    public List<NoteLike> selectByUserId(Integer userId) {
+        return noteLikeMapper.selectByUserId(userId);
     }
 }

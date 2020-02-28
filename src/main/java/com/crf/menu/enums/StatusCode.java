@@ -24,7 +24,9 @@ public enum StatusCode {
     MenuCollectExit(50002,"菜谱收藏已存在"),
 
     NoteLikeNoExit(60001,"笔记喜欢已存在"),
-    NoteLikeExit(60002,"笔记喜欢已存在");
+    NoteLikeExit(60002,"笔记喜欢已存在"),
+
+    NoteLikeNumNoNegative(60002,"笔记点赞数不能为负");
 
     final private Integer Code;
     final private String msg;

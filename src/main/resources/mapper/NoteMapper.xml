@@ -22,6 +22,12 @@
   <select id="selectOrderByTime" resultMap="BaseResultMap">
     select * from note ORDER BY create_time DESC
   </select>
+  <select id="selectByNoteName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from note
+    where note_name like CONCAT('%',#{noteName},'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from note
     where id = #{id,jdbcType=INTEGER}
@@ -116,5 +122,15 @@
       like_num = #{likeNum,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="addLikeNum" parameterType="java.lang.Integer">
+    update note
+      set like_num = like_num + 1
+    where id = #{noteId,jdbcType=INTEGER};
+  </update>
+  <update id="delLikeNum" parameterType="java.lang.Integer">
+    update note
+      set like_num = like_num + -1
+    where id = #{noteId,jdbcType=INTEGER};
   </update>
 </mapper>

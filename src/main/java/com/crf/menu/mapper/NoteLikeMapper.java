@@ -2,6 +2,8 @@ package com.crf.menu.mapper;
 
 import com.crf.menu.entity.NoteLike;
 
+import java.util.List;
+
 public interface NoteLikeMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -12,6 +14,8 @@ public interface NoteLikeMapper {
     NoteLike selectByPrimaryKey(Integer id);
 
     NoteLike selectByNoteIdAndUserId(Integer userId,Integer noteId);
+
+    List<NoteLike> selectByUserId(Integer userId);
 
     int updateByPrimaryKeySelective(NoteLike record);
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,27 @@ public class NoteController {
     public BaseResponse getNoteVoList(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
         List<NoteListVO> noteListVOList = noteService.getNoteListVO(pageNum,pageSize);
         BaseResponse response = new BaseResponse(StatusCode.Success);
+        response.setData(noteListVOList);
+        return response;
+    }
+
+    @PostMapping(value = "getNotesVOByNoteName")
+    public BaseResponse getNotesVOByNoteName(@RequestParam("noteName") String noteName,
+                                             @Min(value = 1,message = "pageNum非法") @RequestParam("pageNum") Integer pageNum,
+                                             @Min (value = 1,message = "pageSize非法") @RequestParam("pageSize") Integer pageSize){
+        BaseResponse response = new BaseResponse(StatusCode.Success);
+        List<NoteListVO> noteListVOList = noteService.getNotesVOByNoteName(noteName,pageNum,pageSize);
+        response.setData(noteListVOList);
+        return response;
+    }
+
+    @CheckToken
+    @PostMapping(value = "getNotesVOByUserId")
+    public BaseResponse getNotesVOByUserId(@RequestParam("token") String token,
+                                           @Min(value = 1,message = "pageNum非法") @RequestParam("pageNum") Integer pageNum,
+                                           @Min (value = 1,message = "pageSize非法") @RequestParam("pageSize") Integer pageSize){
+        BaseResponse response = new BaseResponse(StatusCode.Success);
+        List<NoteListVO> noteListVOList = noteService.getNoteListVOByUserId(token,pageNum,pageSize);
         response.setData(noteListVOList);
         return response;
     }

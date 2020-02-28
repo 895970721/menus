@@ -1,9 +1,11 @@
 package com.crf.menu.service.Impl;
 
-import com.crf.menu.entity.Note;
-import com.crf.menu.entity.User;
+import com.crf.menu.entity.*;
+import com.crf.menu.enums.StatusCode;
+import com.crf.menu.exception.NoteException;
 import com.crf.menu.mapper.NoteMapper;
 import com.crf.menu.service.NoteService;
+import com.crf.menu.utils.DateUtil;
 import com.crf.menu.utils.FileUtil;
 import com.crf.menu.utils.UserTokenUtilImpl;
 import com.crf.menu.vo.NoteListVO;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,10 @@ public class NoteServiceImpl implements NoteService {
 
     @Autowired
     private NoteMapper noteMapper;
+
+    @Autowired
+    private NoteLikeServiceImpl noteLikeService;
+
 
     @Autowired
     private UserServiceImpl userService;
@@ -56,14 +61,21 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteListVO> getNoteListVO(Integer pageNum, Integer pageSize) {
+        List<Note> noteList = noteMapper.selectOrderByTime();
+        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList,pageNum,pageSize);
+        return noteListVOList;
+    }
+
+    @Override
+    public List<NoteListVO> getNoteListVOByList(List<Note> noteList, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<NoteListVO> noteListVOList = new ArrayList<NoteListVO>();
-        List<Note> noteList = noteMapper.selectOrderByTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long now1 = System.currentTimeMillis();
         for(Note note : noteList){
+            long now2 = note.getCreateTime().getTime();
             User user = userService.selectByUserId(note.getUserId());
             NoteListVO noteListVO = new NoteListVO();
-            noteListVO.setCreateTime(sdf.format(note.getCreateTime()));
+            noteListVO.setCreateTime(DateUtil.getDateDiff(now2,now1));
             noteListVO.setLikeNum(note.getLikeNum());
             noteListVO.setNickName(user.getNickName());
             noteListVO.setNoteContent(note.getNoteContent());
@@ -76,4 +88,43 @@ public class NoteServiceImpl implements NoteService {
         }
         return noteListVOList;
     }
+
+    @Override
+    public Integer addLikeNum(Integer noteId){
+        Integer updCnt = noteMapper.addLikeNum(noteId);
+        return updCnt;
+    }
+
+    @Override
+    public Integer delLikeNum(Integer noteId){
+        Note note = noteMapper.selectByPrimaryKey(noteId);
+        if(note.getLikeNum() < 0){
+            throw new NoteException(StatusCode.NoteLikeNumNoNegative);
+        }
+        Integer updCnt = noteMapper.delLikeNum(noteId);
+        return updCnt;
+    }
+
+    @Override
+    public List<NoteListVO> getNotesVOByNoteName(String note_name,Integer pageNum,Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Note> noteList = noteMapper.selectByNoteName(note_name);
+        return getNoteListVOByList(noteList,pageNum,pageSize);
+    }
+
+    @Override
+    public List<NoteListVO> getNoteListVOByUserId(String token,Integer pageNum,Integer pageSize) {
+        User user = tokenUtil.getUser(token);
+        List<NoteLike> noteLikeList = noteLikeService.selectByUserId(user.getId());
+        List<Note> noteList = new ArrayList<>();
+        for(NoteLike noteLike:noteLikeList)
+        {
+            Integer note_id = noteLike.getNoteId();
+            Note note = noteMapper.selectByPrimaryKey(note_id);
+            noteList.add(note);
+        }
+        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList,pageNum,pageSize);
+        return noteListVOList;
+    }
+
 }
