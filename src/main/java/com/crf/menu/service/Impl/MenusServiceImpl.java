@@ -169,6 +169,7 @@ public class MenusServiceImpl implements MenusService {
         return menusMapper.selectByCategorySmallId(id);
     }
 
+    @Override
     public List<MenuListVO> getMenusVOByMenuList(List<Menus> list)
     {
         List<MenuListVO> menuListVOList = new ArrayList<>();
@@ -207,5 +208,12 @@ public class MenusServiceImpl implements MenusService {
         List<Menus> menusList = menusMapper.selectByMenuName(name);
         List<MenuListVO> menuListVOList = getMenusVOByMenuList(menusList);
         return menuListVOList;
+    }
+
+    @Override
+    public List<MenuListVO> getMenusVO(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Menus> menusList = menusMapper.selectAll();
+        return getMenusVOByMenuList(menusList);
     }
 }

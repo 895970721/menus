@@ -11,7 +11,7 @@ public interface NoteService {
 
     List<NoteListVO> getNoteListVO(Integer pageNum,Integer pageSize);
 
-    List<NoteListVO> getNoteListVOByList(List<Note> noteList, Integer pageNum, Integer pageSize);
+    List<NoteListVO> getNoteListVOByList(List<Note> noteList);
 
     Integer addLikeNum(Integer noteId);
 

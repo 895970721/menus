@@ -9,8 +9,6 @@ import com.crf.menu.entity.Role;
 import com.crf.menu.entity.TokenEntity;
 import com.crf.menu.entity.User;
 import com.crf.menu.enums.ExpTime;
-import com.crf.menu.enums.StatusCode;
-import com.crf.menu.exception.UserException;
 import com.crf.menu.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Slf4j

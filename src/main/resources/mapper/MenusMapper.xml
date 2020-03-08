@@ -28,6 +28,11 @@
     from menus
     where name like CONCAT('%',#{name},'%')
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from menus
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from menus
     where id = #{id,jdbcType=INTEGER}

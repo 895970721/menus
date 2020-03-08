@@ -61,14 +61,14 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteListVO> getNoteListVO(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         List<Note> noteList = noteMapper.selectOrderByTime();
-        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList,pageNum,pageSize);
+        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList);
         return noteListVOList;
     }
 
     @Override
-    public List<NoteListVO> getNoteListVOByList(List<Note> noteList, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public List<NoteListVO> getNoteListVOByList(List<Note> noteList) {
         List<NoteListVO> noteListVOList = new ArrayList<NoteListVO>();
         long now1 = System.currentTimeMillis();
         for(Note note : noteList){
@@ -109,11 +109,12 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteListVO> getNotesVOByNoteName(String note_name,Integer pageNum,Integer pageSize){
         PageHelper.startPage(pageNum,pageSize);
         List<Note> noteList = noteMapper.selectByNoteName(note_name);
-        return getNoteListVOByList(noteList,pageNum,pageSize);
+        return getNoteListVOByList(noteList);
     }
 
     @Override
     public List<NoteListVO> getNoteListVOByUserId(String token,Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         User user = tokenUtil.getUser(token);
         List<NoteLike> noteLikeList = noteLikeService.selectByUserId(user.getId());
         List<Note> noteList = new ArrayList<>();
@@ -123,7 +124,7 @@ public class NoteServiceImpl implements NoteService {
             Note note = noteMapper.selectByPrimaryKey(note_id);
             noteList.add(note);
         }
-        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList,pageNum,pageSize);
+        List<NoteListVO> noteListVOList = getNoteListVOByList(noteList);
         return noteListVOList;
     }
 

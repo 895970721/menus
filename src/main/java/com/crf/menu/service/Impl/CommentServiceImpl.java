@@ -4,6 +4,7 @@ import com.crf.menu.entity.Comment;
 import com.crf.menu.entity.User;
 import com.crf.menu.mapper.CommentMapper;
 import com.crf.menu.service.CommentService;
+import com.crf.menu.utils.DateUtil;
 import com.crf.menu.utils.UserTokenUtilImpl;
 import com.crf.menu.vo.CommentVO;
 import org.springframework.beans.BeanUtils;
@@ -31,12 +32,13 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentVO> selectByNoteId(Integer noteId) {
         List<Comment> commentList = commentMapper.selectByNoteId(noteId);
         List<CommentVO> commentVOList = new ArrayList<CommentVO>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long now1 = System.currentTimeMillis();
         for (Comment comment : commentList){
+            long now2 = comment.getCreateTime().getTime();
             User fromUser = userService.selectByUserId(comment.getFromUid());
             CommentVO commentVO = new CommentVO();
             BeanUtils.copyProperties(comment,commentVO);
-            commentVO.setCreateTime(sdf.format(comment.getCreateTime()));
+            commentVO.setCreateTime(DateUtil.getDateDiff(now2,now1));
             commentVO.setFromNickName(fromUser.getNickName());
             commentVO.setFromUserImage(fromUser.getPhotoAddress());
             if(comment.getToUid() != null){

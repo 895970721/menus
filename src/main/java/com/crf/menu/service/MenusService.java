@@ -28,4 +28,7 @@ public interface MenusService {
 
     // 通过菜品名字,查询对应菜品VO
     List<MenuListVO> getMenusVOByMenuName(String name,Integer pageNum,Integer pageSize);
+
+    // 获取菜品VO
+    List<MenuListVO> getMenusVO(Integer pageNum,Integer pageSize);
 }

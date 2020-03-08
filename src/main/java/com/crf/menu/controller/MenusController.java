@@ -77,4 +77,14 @@ public class MenusController {
         response.setData(menuListVOList);
         return response;
     }
+
+    @PostMapping(value = "/getAllMenusVO")
+    public BaseResponse getAllMenusVO(@Min (value = 1,message = "pageNum非法") @RequestParam("pageNum") Integer pageNum,
+                                      @Min (value = 1,message = "pageSize非法") @RequestParam("pageSize") Integer pageSize)
+    {
+        BaseResponse response = new BaseResponse(StatusCode.Success);
+        List<MenuListVO> menuListVOList = menusService.getMenusVO(pageNum,pageSize);
+        response.setData(menuListVOList);
+        return response;
+    }
 }

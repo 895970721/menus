@@ -9,7 +9,7 @@ public class DateUtil {
         Long Chour = (timestamp/1000/3600);
         Long Cminute = (timestamp/1000/60);
         Long Csecond = (timestamp/1000);
-        String result = "";
+        String result = "1秒前";
         if(Cyear >= 1){
             result = (Cyear) + "年前";
         }else if(Cmonth >= 1){

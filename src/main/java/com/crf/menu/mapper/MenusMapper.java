@@ -17,6 +17,8 @@ public interface MenusMapper {
 
     List<Menus> selectByMenuName(String name);
 
+    List<Menus> selectAll();
+
     int updateByPrimaryKeySelective(Menus record);
 
     int updateByPrimaryKey(Menus record);

@@ -56,7 +56,6 @@ public class NoteController {
                                              @Min (value = 1,message = "pageSize非法") @RequestParam("pageSize") Integer pageSize){
         BaseResponse response = new BaseResponse(StatusCode.Success);
         List<NoteListVO> noteListVOList = noteService.getNotesVOByNoteName(noteName,pageNum,pageSize);
-        response.setData(noteListVOList);
         return response;
     }
 
