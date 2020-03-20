@@ -40,12 +40,15 @@ public class CamasterServiceImpl implements CamasterService {
     @Override
     public List<CategoryVO> getAllCategory() {
         List<CategoryVO> categoryVOList = new ArrayList<>();
+        //首先从redis读取数据
         if (redisUtil.get("categoryVOList") != null)
         {
             categoryVOList = (List<CategoryVO>) redisUtil.get("categoryVOList");
         }
+        //redis没有数据,在从mysql读取数据
         else
         {
+            // mysql数据整合
             List<Camaster> camasterList = camasterMapper.getAllCamaster();
             for(Camaster camaster: camasterList)
             {
@@ -64,6 +67,7 @@ public class CamasterServiceImpl implements CamasterService {
                 categoryVO.setCategoryBigWord(camaster.getCategoryBig());
                 categoryVOList.add(categoryVO);
             }
+            //将整合后的数据存入redis
             redisUtil.set("categoryVOList",categoryVOList);
         }
         return categoryVOList;

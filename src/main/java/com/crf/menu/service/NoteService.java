@@ -20,4 +20,8 @@ public interface NoteService {
     List<NoteListVO> getNotesVOByNoteName(String note_name,Integer pageNum,Integer pageSize);
 
     List<NoteListVO> getNoteListVOByUserId(String token,Integer pageNum,Integer pageSize);
+
+    Integer delNote(Integer noteId);
+
+    List<NoteListVO> getNoteListByUserId(String token);
 }

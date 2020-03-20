@@ -17,6 +17,10 @@ spring:
         min-idle: 0
     timeout: 10000
 
+#远程服务器用户头像地址和笔记首图地址
 user:
   imagePath: "/home/menu_img/user/"
   noteImagePath: "/home/menu_img/user/note_img/"
+
+log:
+  path: "/home/dev/menuLog"

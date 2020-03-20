@@ -26,5 +26,10 @@ class NoteServiceImplTest {
         System.out.println(noteListVOList);
     }
 
+    @Test
+    void testDelNote(){
+        Integer noteId = 1;
+    }
+
 
 }

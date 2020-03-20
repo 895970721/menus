@@ -22,6 +22,9 @@
   <select id="selectOrderByTime" resultMap="BaseResultMap">
     select * from note ORDER BY create_time DESC
   </select>
+  <select id="getNoteListByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from note where user_id = #{user_id,jdbcType=INTEGER} order by create_time DESC
+  </select>
   <select id="selectByNoteName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     *

@@ -10,7 +10,10 @@ spring:
     password: ''
 
 
-
+#本地服务器用户头像地址和笔记首图地址
 user:
   imagePath: "D:\\graduation_project\\menu_img\\user\\"
   noteImagePath: "D:\\graduation_project\\menu_img\\user\\note_img\\"
+
+log:
+  path: "D:\\graduation_project\\menuLog"

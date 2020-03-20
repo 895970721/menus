@@ -18,6 +18,11 @@ public class CamasterController {
     @Autowired
     private CamasterServiceImpl camasterService;
 
+
+    /**
+     * 获取所有分类信息
+     * @return
+     */
     @PostMapping(value = "getAllCategory")
     public BaseResponse getAllCategory()
     {

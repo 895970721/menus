@@ -1,6 +1,7 @@
 package com.crf.menu.mapper;
 
 import com.crf.menu.entity.Note;
+import com.crf.menu.vo.NoteListVO;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface NoteMapper {
     Integer addLikeNum(Integer noteId);
 
     Integer delLikeNum(Integer noteId);
+
+    List<Note> getNoteListByUserId(Integer userId);
 }

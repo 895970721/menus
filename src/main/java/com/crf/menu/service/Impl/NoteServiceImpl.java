@@ -128,4 +128,18 @@ public class NoteServiceImpl implements NoteService {
         return noteListVOList;
     }
 
+    @Override
+    public Integer delNote(Integer noteId) {
+        return noteMapper.deleteByPrimaryKey(noteId);
+    }
+
+    @Override
+    public List<NoteListVO> getNoteListByUserId(String token){
+        User user = tokenUtil.getUser(token);
+        List<Note> list = noteMapper.getNoteListByUserId(user.getId());
+        List<NoteListVO> noteListVOList = getNoteListVOByList(list);
+        return noteListVOList;
+    }
+
+
 }
