@@ -1,6 +1,12 @@
 package com.crf.menu.utils;
 
 public class DateUtil {
+    /**
+     * 将先前的时间与现在时间比较得出相差的时间，用中文表示
+     * @param youngTimeStamp    之前的时间
+     * @param nowTimeStamp    现在的时间
+     * @return
+     */
     public static String getDateDiff(Long youngTimeStamp,Long nowTimeStamp){
         Long timestamp = nowTimeStamp - youngTimeStamp;
         Long Cyear = (timestamp/1000/3600/24/365);

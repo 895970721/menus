@@ -15,5 +15,6 @@ user:
   imagePath: "D:\\graduation_project\\menu_img\\user\\"
   noteImagePath: "D:\\graduation_project\\menu_img\\user\\note_img\\"
 
+#本地服务器日志文件地址
 log:
   path: "D:\\graduation_project\\menuLog"

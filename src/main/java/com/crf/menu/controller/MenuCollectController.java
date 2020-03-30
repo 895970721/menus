@@ -21,6 +21,12 @@ public class MenuCollectController {
     @Autowired
     private MenuCollectServiceImpl menuCollectService;
 
+    /**
+     * 增加收藏
+     * @param token    用户标识
+     * @param menu_id  菜谱id
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "addCollect")
     public BaseResponse addCollect(@RequestParam("token") String token,
@@ -32,6 +38,12 @@ public class MenuCollectController {
         return response;
     }
 
+    /**
+     * 删除收藏
+     * @param token    用户标识
+     * @param menu_id  菜谱id
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "delCollect")
     public BaseResponse delCollect(@RequestParam("token") String token,

@@ -23,6 +23,11 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentService;
 
+    /**
+     * 通过笔记id返回评论列表
+     * @param noteId    笔记id
+     * @return
+     */
     @PostMapping(value = "selectByNoteId")
     public BaseResponse selectByNoteId(@RequestParam("noteId") Integer noteId){
         BaseResponse response = new BaseResponse(StatusCode.Success);
@@ -31,6 +36,14 @@ public class CommentController {
         return response;
     }
 
+    /**
+     * 添加笔记评论
+     * @param token      用户标识
+     * @param noteId     笔记id
+     * @param content    笔记内容
+     * @param toUid      回复的用户id(可以为空，表示对笔记的评论)
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "add")
     public BaseResponse addComment(@RequestParam("token") String token,@RequestParam("noteId") Integer noteId,
@@ -43,6 +56,11 @@ public class CommentController {
         return response;
     }
 
+    /**
+     * 删除评论
+     * @param commentId     评论id
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "del")
     public BaseResponse delComment(@RequestParam("commentId") Integer commentId){

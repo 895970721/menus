@@ -26,6 +26,12 @@ public class UserController {
     @Autowired
     private UserTokenUtilImpl tokenUtil;
 
+    /**
+     * 用户登陆接口
+     * @param username    用户名
+     * @param password    密码
+     * @return
+     */
     @PostMapping(value = "login")
     public BaseResponse login(@Pattern(regexp = "^[\\w]{5,9}$",message = "用户名格式错误") @RequestParam("username") String username,
                               @Pattern(regexp = "^[a-zA-Z]\\d{6,9}$",message = "密码格式错误") @RequestParam("password") String password)
@@ -38,6 +44,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 用户注册接口
+     * @param username    用户名
+     * @param password    密码
+     * @return
+     */
     @PostMapping(value = "register")
     public BaseResponse register(@Pattern(regexp = "^[\\w]{5,9}$",message = "用户名格式错误") @RequestParam("username") String username,
                                  @Pattern(regexp = "^[a-zA-Z]\\d{6,9}$",message = "密码格式错误") @RequestParam("password") String password)
@@ -50,6 +62,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 用户修改昵称接口
+     * @param nickname    用户昵称
+     * @param token       用户标识
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "updNickName")
     public BaseResponse updNickName(@Pattern(regexp = "^[\\s\\S]{2,15}$",message = "昵称长度错误") @RequestParam("nickname") String nickname,
@@ -64,6 +82,12 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 用户上传头像接口
+     * @param file     头像文件
+     * @param token    用户标识
+     * @return
+     */
     @CheckToken
     @PostMapping("uploadimage")
     public BaseResponse uploadimg(@RequestParam MultipartFile file, @RequestParam("token") String token)
@@ -76,6 +100,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 获得用户信息接口
+     * @param token    用户标识
+     * @return
+     */
     @CheckToken
     @PostMapping("getInfo")
     public BaseResponse getInfo(@RequestParam("token") String token)

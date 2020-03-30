@@ -22,5 +22,6 @@ user:
   imagePath: "/home/menu_img/user/"
   noteImagePath: "/home/menu_img/user/note_img/"
 
+#远程服务器日志文件地址
 log:
   path: "/home/dev/menuLog"

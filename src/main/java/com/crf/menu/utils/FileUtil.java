@@ -13,9 +13,15 @@ import java.util.UUID;
 @Slf4j
 @Component
 public class FileUtil {
+    /**
+     * 文件移动工具
+     * @param file    被移动的文件
+     * @param Path    移动后的路径
+     * @return
+     */
     public static String MupFileMoveTo(MultipartFile file ,String Path){
         String uuid = UUID.randomUUID().toString();
-        String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));    // 取得后缀
         String filePath = Path + uuid +suffix;
         File image = new File(filePath);
         if(image.getParentFile().exists())

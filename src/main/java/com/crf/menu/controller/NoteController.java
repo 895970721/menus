@@ -30,6 +30,14 @@ public class NoteController {
     @Autowired
     private UserTokenUtilImpl tokenUtil;
 
+    /**
+     * 添加笔记
+     * @param token          用户标识
+     * @param file           用户上传照片
+     * @param noteName       笔记名称
+     * @param noteContent    笔记内容
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "add")
     public BaseResponse add(@RequestParam("token") String token, @RequestParam(required = false) MultipartFile file,
@@ -42,6 +50,12 @@ public class NoteController {
         return response;
     }
 
+    /**
+     * 返回笔记列表信息
+     * @param pageNum    页码
+     * @param pageSize   每页数量
+     * @return
+     */
     @PostMapping(value = "getNoteVoList")
     public BaseResponse getNoteVoList(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
         List<NoteListVO> noteListVOList = noteService.getNoteListVO(pageNum,pageSize);
@@ -50,6 +64,13 @@ public class NoteController {
         return response;
     }
 
+    /**
+     * 通过笔记名称返回笔记列表信息
+     * @param noteName    笔记名称
+     * @param pageNum     页码
+     * @param pageSize    每页数量
+     * @return
+     */
     @PostMapping(value = "getNotesVOByNoteName")
     public BaseResponse getNotesVOByNoteName(@RequestParam("noteName") String noteName,
                                              @Min(value = 1,message = "pageNum非法") @RequestParam("pageNum") Integer pageNum,
@@ -60,6 +81,13 @@ public class NoteController {
         return response;
     }
 
+    /**
+     * 通过用户id返回用户喜欢的笔记列表
+     * @param token      用户标识
+     * @param pageNum    页码
+     * @param pageSize   每页数量
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "getNotesVOByUserId")
     public BaseResponse getNotesVOByUserId(@RequestParam("token") String token,
@@ -71,6 +99,11 @@ public class NoteController {
         return response;
     }
 
+    /**
+     * 通过用户id返回用户发布的笔记
+     * @param token    用户标识
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "getNoteVOListByUserId")
     public BaseResponse getNoteVOListByUserId(@RequestParam("token") String token){

@@ -5,7 +5,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
 
-
+#nginx服务器上的静态资源目录
 Image:
   menu: "http://47.100.90.111/menu_img/"
 

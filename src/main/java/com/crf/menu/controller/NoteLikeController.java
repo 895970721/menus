@@ -22,6 +22,12 @@ public class NoteLikeController {
     @Autowired
     private NoteLikeServiceImpl noteLikeService;
 
+    /**
+     * 添加喜欢笔记
+     * @param token      用户标识
+     * @param note_id    笔记id
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "addLike")
     public BaseResponse addLike(@RequestParam("token") String token,
@@ -32,6 +38,12 @@ public class NoteLikeController {
         return response;
     }
 
+    /**
+     * 删除喜欢笔记
+     * @param token      用户标识
+     * @param note_id    笔记id
+     * @return
+     */
     @CheckToken
     @PostMapping(value = "delLike")
     public BaseResponse delLike(@RequestParam("token") String token,
